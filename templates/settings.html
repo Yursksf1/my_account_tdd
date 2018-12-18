@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block title %}
-  {{ owner }} dashboard
+  {{ owner }} Settings
 {% endblock %}
 
 {% block content %}
@@ -39,23 +39,14 @@
 
     <div id="main" class="" v-bind:class="panel_state">
         <div class="header">
-            <h2>{{ owner }} dashboard</h2>
+            <h2>{{ owner }} Settings</h2>
         </div>
         <div class="content content-is-center">
-          <div class="pure-g">
-            <div class="pure-u-1">
-              <h4>your balance:</h4>
-              <h2>{{ balance_report.balance|floatformat }} COP</h2>
-            </div>
-            <div class="pure-u-1-2">
-              <p>outcome:</p>
-              <h4>{{ balance_report.expenses|floatformat }} COP</h4>
-            </div>
-            <div class="pure-u-1-2">
-              <p>income:</p>
-              <h4>{{ balance_report.incomes|floatformat }} COP</h4>
-            </div>
-          </div>
+          <form method="post" class="pure-form pure-form-stacked">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+          </form>        
         </div>
     </div>
 </div>

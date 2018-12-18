@@ -2,6 +2,7 @@ import os
 from yaml import load
 
 from django.views.generic import TemplateView, DetailView
+from django.views.generic.edit import FormView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.decorators import method_decorator
@@ -9,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from persons.models import owner
+from persons.forms import ContactForm
 from accounts.models import account, transaction, transactionCategory
 from accounts.utils import calculate_balance_report
 
@@ -64,17 +66,16 @@ class detailTemplateView(TemplateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class settingsTemplateView(TemplateView):
-    http_method_names = ['get']
+class settingsTemplateView(FormView):
     template_name = 'settings.html'
+    form_class = ContactForm
+    success_url = '/persons/settings/'
 
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['owner'] = owner.objects.get(user=request.user)
-        context['account'] = account.objects.get(owner=context['owner'])
-        context['balance_report'] = calculate_balance_report(context['account'])
-        # context['transactions'] = transaction.objects.filter(account=context['account'])
-        return self.render_to_response(context)
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.send_email()
+        return super().form_valid(form)
 
 
 def signupView(request):
