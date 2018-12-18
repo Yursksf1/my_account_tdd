@@ -1,3 +1,8 @@
 from django.contrib import admin
+from persons.models import owner
 
-# Register your models here.
+
+class OwnerAdmin(admin.ModelAdmin):
+	list_display = ('id','user', 'name', 'notes', 'active_notifications')
+
+admin.site.register(owner, OwnerAdmin)
