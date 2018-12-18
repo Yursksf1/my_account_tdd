@@ -25,6 +25,7 @@ class dashboardTemplateView(TemplateView):
         context['owner'] = owner.objects.get(user=request.user)
         context['account'] = account.objects.get(owner=context['owner'])
         context['balance_report'] = calculate_balance_report(context['account'])
+        context['nav_dashboard'] = ' pure-menu-selected'
         return self.render_to_response(context)
 
 @method_decorator(login_required, name='dispatch')
@@ -36,7 +37,9 @@ class detailTemplateView(TemplateView):
         context = self.get_context_data(**kwargs)
         context['owner'] = owner.objects.get(user=request.user)
         context['account'] = account.objects.get(owner=context['owner'])
+        context['nav_new_transaction'] = ' pure-menu-selected'
         balance_report = calculate_balance_report(context['account'])
+
         if kwargs['category'] == 'outcome':
             outcome_categories = transactionCategory.objects.filter(income=False)
             transactions = transaction.objects.filter(
@@ -111,4 +114,5 @@ def signupView(request):
                 text = f.read()
                 context = load(text)
             context['form'] = form
+            context['nav_signup'] = ' pure-menu-selected'
             return render(request, 'signup.html', context)

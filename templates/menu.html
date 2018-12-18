@@ -5,14 +5,13 @@
 
             <ul class="pure-menu-list">
               {% if user.is_authenticated %}
-              <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'new-transaction' %}">New</a></li>
-              <li class="pure-menu-item pure-menu-selected"><a class="pure-menu-link" href="{% url 'dashboard' %}">Balance</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'login' %}">Login</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'signup' %}">Register</a></li>
-                {% endif %}
-
+                <li class="pure-menu-item {{ nav_new_transaction }}"><a class="pure-menu-link" href="{% url 'new-transaction' %}">New</a></li>
+                <li class="pure-menu-item {{ nav_dashboard }}"><a class="pure-menu-link" href="{% url 'dashboard' %}">Balance</a></li>
+                <li class="pure-menu-item {{ nav_logout }}"><a class="pure-menu-link" href="{% url 'logout' %}">Logout</a></li>
+              {% else %}
+                <li class="pure-menu-item {{ nav_login }}"><a class="pure-menu-link" href="{% url 'login' %}">Login</a></li>
+                <li class="pure-menu-item {{ nav_signup }}"><a class="pure-menu-link" href="{% url 'signup' %}">Register</a></li>
+              {% endif %}
             </ul>
         </div>
     </div>
