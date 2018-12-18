@@ -51,6 +51,10 @@
     width: 80%;
 }
 
+#die_glucke {
+  padding: 10%;
+}
+
 /* The Close Button */
 .close {
     color: #aaaaaa;
